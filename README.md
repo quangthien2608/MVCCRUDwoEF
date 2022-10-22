@@ -150,4 +150,4 @@ Chỉnh sửa đường dẫn kết nối DB trong tập tin **appsettings.json*
 Chú ý thay đổi **Data Source=DESKTOP-KOTO** theo tên máy đang sử dụng 
 >Hoàn thành và chạy thử
 
->Nguồn tham khảo: CodAffection
+>Nguồn tham khảo: **CodAffection**
