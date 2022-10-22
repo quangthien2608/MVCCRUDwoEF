@@ -1,2 +1,1 @@
-# MVCCRUDwoEF
- demo
+Làm thế nào nó hoạt động?
