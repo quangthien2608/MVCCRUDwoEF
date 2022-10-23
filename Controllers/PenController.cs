@@ -47,7 +47,7 @@ namespace MVCCRUDwoEF.Controllers
             PenViewModel penViewModel = new PenViewModel();
             if (id > 0)
                 penViewModel = FetchBookByID(id);
-            return View(penViewModel);
+            return PartialView(penViewModel);
         }
 
         // POST: Pen/Edit/5
@@ -79,7 +79,7 @@ namespace MVCCRUDwoEF.Controllers
         public IActionResult Delete(int? id)
         {
             PenViewModel penViewModel = FetchBookByID(id);
-            return View(penViewModel);
+            return PartialView(penViewModel);
         }
 
         // POST: Pen/Delete/5

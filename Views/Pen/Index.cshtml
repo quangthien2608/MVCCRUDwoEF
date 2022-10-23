@@ -3,48 +3,100 @@
 @{
     ViewData["Title"] = "List of Pens";
 }
+<script>
+    function CreateNew(){
+        $('#tb_pens').hide();
+        $('#AddOrEdit').show();
+        $.get('Pen/AddOrEdit').done(function (response) {
+            document.getElementById("AddOrEdit").innerHTML = response;
+        }).fail(function () {
+            document.getElementById("AddOrEdit").innerHTML =
+            "Something wrong! Try again later!!!" + window.location.href;
+        });
+       
+    }
 
-<div class="jumbotron">
-    <h1 class="text-center">@ViewData["Title"]</h1>
-</div>
-<p>
-    <a asp-action="AddOrEdit">Create New</a>
-</p>
-<table class="table table-bordered">
-    <thead>
-        <tr>
-            <th>
-                Pen Title
-            </th>
-            <th>
-                Type
-            </th>
-            <th>
-                Price
-            </th>
-            <th>
-                <a asp-action="AddOrEdit">Create New</a>
-            </th>
-        </tr>
-    </thead>
-    <tbody>
-        @for (int i = 0; i < Model.Rows.Count; i++)
-        {
+    function Edit(id) {
+        $('#tb_pens').hide();
+        $('#AddOrEdit').show();
+        $.get('Pen/AddOrEdit/'+ id).done(function (response) {
+            document.getElementById("AddOrEdit").innerHTML = response;
+        }).fail(function () {
+            document.getElementById("AddOrEdit").innerHTML =
+                "Something wrong! Try again later!!!" + window.location.href;
+        });
+
+    }
+
+    function Delete(id) {
+        $('#tb_pens').hide();
+        $('#AddOrEdit').show();
+        $.get('Pen/Delete/'+ id).done(function (response) {
+            document.getElementById("AddOrEdit").innerHTML = response;
+        }).fail(function () {
+            document.getElementById("AddOrEdit").innerHTML =
+                "Something wrong! Try again later!!!" + window.location.href;
+        });
+
+    }
+
+    function ReturnIndex() {
+        $('#AddOrEdit').hide();
+        $('#tb_pens').show();
+    }
+
+    function Submit() {
+
+    }
+</script>
+
+<div id="tb_pens">
+    <div class="jumbotron">
+        <h1 class="text-center">@ViewData["Title"]</h1>
+    </div>
+    <p>
+        <a href="javascript:void(0);" onclick="CreateNew();">Create New</a>
+    </p>
+    <table class="table table-bordered">
+        <thead>
             <tr>
-                <td>
-                    @Model.Rows[i]["Title"]
-                </td>
-                <td>
-                    @Model.Rows[i]["Type"]
-                </td>
-                <td>
-                    @Model.Rows[i]["Price"]
-                </td>
-                <td>
-                    <a asp-action="AddOrEdit" asp-route-id="@Model.Rows[i]["PenID"]">Edit</a> |
-                    <a asp-action="Delete" asp-route-id="@Model.Rows[i]["PenID"]">Delete</a>
-                </td>
+                <th>
+                    Pen Title
+                </th>
+                <th>
+                    Type
+                </th>
+                <th>
+                    Price
+                </th>
+                <th>
+                    <a href="javascript:void(0);" onclick="CreateNew();">Create New</a>
+                </th>
             </tr>
-        }
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+            @for (int i = 0; i < Model.Rows.Count; i++)
+            {
+                <tr>
+                    <td>
+                        @Model.Rows[i]["Title"]
+                    </td>
+                    <td>
+                        @Model.Rows[i]["Type"]
+                    </td>
+                    <td>
+                        @Model.Rows[i]["Price"]
+                    </td>
+                    <td>
+                        <a href="javascript:void(0)" onclick="Edit(@Model.Rows[i]["PenID"])">Edit</a> |
+                        <a href="javascript:void(0)" onclick="Delete(@Model.Rows[i]["PenID"])" )>Delete</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+<div id="AddOrEdit">
+
+</div>
