@@ -45,58 +45,56 @@
         $('#tb_pens').show();
     }
 
-    function Submit() {
+    function LoadData() {
+        $('#loader').show();
 
+        $.get('Pen/LoadData/').done(function (response) {
+            document.getElementById("loader").innerHTML = response;
+        }).fail(function () {
+            document.getElementById("loader").innerHTML =
+                "Something wrong! Try again later!!!" + window.location.href;
+        });
     }
+
+    function SubmitAdd() {
+        $('#AddOrEdit').hide();
+        $('#tb_pens').show();
+
+        let formElm = $('#form-data');
+        let formDataElm = document.getElementById('form-data');
+        let formData = new FormData(formDataElm)
+
+        $.post('Pen/AddOrEdit/',
+            { PenID: $('#PenID').val(), Title: $('#Title').val(), Type: $('#Type').val(), Price: $('#Price').val() },
+        ).done(function (response) {
+            window.history.pushState("", "", '/');
+            LoadData();
+        }).fail(function () {
+            window.history.pushState("", "", '/');
+            LoadData();
+        });
+    }
+
+    function DeleteConfirmed() {
+        $('#AddOrEdit').hide();
+        $('#tb_pens').show();
+
+        $.post('Pen/Delete',
+            { PenID: $('#PenID').val() },
+        ).done(function (response) {
+            window.history.pushState("", "", '/');
+            LoadData();
+        }).fail(function () {
+            window.history.pushState("", "", '/');
+            LoadData();
+        });
+    }
+
+    setTimeout(function(){
+        LoadData();
+    }, 250)
 </script>
 
-<div id="tb_pens">
-    <div class="jumbotron">
-        <h1 class="text-center">@ViewData["Title"]</h1>
-    </div>
-    <p>
-        <a href="javascript:void(0);" onclick="CreateNew();">Create New</a>
-    </p>
-    <table class="table table-bordered">
-        <thead>
-            <tr>
-                <th>
-                    Pen Title
-                </th>
-                <th>
-                    Type
-                </th>
-                <th>
-                    Price
-                </th>
-                <th>
-                    <a href="javascript:void(0);" onclick="CreateNew();">Create New</a>
-                </th>
-            </tr>
-        </thead>
-        <tbody>
-            @for (int i = 0; i < Model.Rows.Count; i++)
-            {
-                <tr>
-                    <td>
-                        @Model.Rows[i]["Title"]
-                    </td>
-                    <td>
-                        @Model.Rows[i]["Type"]
-                    </td>
-                    <td>
-                        @Model.Rows[i]["Price"]
-                    </td>
-                    <td>
-                        <a href="javascript:void(0)" onclick="Edit(@Model.Rows[i]["PenID"])">Edit</a> |
-                        <a href="javascript:void(0)" onclick="Delete(@Model.Rows[i]["PenID"])" )>Delete</a>
-                    </td>
-                </tr>
-            }
-        </tbody>
-    </table>
-</div>
-
-<div id="AddOrEdit">
-
+<div id="loader">
+    
 </div>

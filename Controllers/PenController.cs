@@ -23,6 +23,13 @@ namespace MVCCRUDwoEF.Controllers
 
         // GET: Pen
         public IActionResult Index()
+        {           
+            return View();
+        }
+
+        // POST: DataTable
+        [HttpGet] 
+        public IActionResult LoadData()
         {
             DataTable dtbl = new DataTable();
             using (SqlConnection sqlConnection = new SqlConnection(_configuration.GetConnectionString("DevConnection")))
@@ -32,7 +39,7 @@ namespace MVCCRUDwoEF.Controllers
                 sqlDa.SelectCommand.CommandType = CommandType.StoredProcedure;
                 sqlDa.Fill(dtbl);
             }
-            return View(dtbl);
+            return PartialView(dtbl);
         }
 
         // GET: Pen/Create
@@ -54,7 +61,7 @@ namespace MVCCRUDwoEF.Controllers
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        [ValidateAntiForgeryToken]
+        //[ValidateAntiForgeryToken]
         public IActionResult AddOrEdit(int id, [Bind("PenID,Title,Type,Price")] PenViewModel penViewModel)
         {
             if (ModelState.IsValid)
@@ -84,7 +91,7 @@ namespace MVCCRUDwoEF.Controllers
 
         // POST: Pen/Delete/5
         [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
+        //[ValidateAntiForgeryToken]
         public IActionResult DeleteConfirmed(int id)
         {
             using (SqlConnection sqlConnection = new SqlConnection(_configuration.GetConnectionString("DevConnection")))
